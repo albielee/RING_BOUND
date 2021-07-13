@@ -1,0 +1,93 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Loop/debugCircle.png" type="Texture" id=1]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends StaticBody2D
+
+export var radius = 50
+export var segment_count = 50
+export var SPIN_SPEED = 0.04
+export var SPIN_DIR = 1
+
+onready var collision = load(\"res://Environment/LoopCollider.tscn\")
+onready var spawn_transform = global_transform
+
+var segment_lines = []
+
+func _ready():
+	create_circle(segment_count, radius)
+	
+	#$debugImage.scale = Vector2(1.2,1.2)
+	#add_spike(34,1)
+	#add_spike(13,1)
+	#add_spike(45,1)
+	#segment_lines[5].queue_free()
+	#segment_lines[6].queue_free()
+	segment_lines[7].queue_free()
+	segment_lines[8].queue_free()
+	segment_lines[9].queue_free()
+	segment_lines[10].queue_free()
+	segment_lines[11].queue_free()
+	segment_lines[12].queue_free()
+	segment_lines[13].queue_free()
+	
+	#add_spike(19,1)
+
+func create_circle(s_c,r):
+	for i in range(s_c):
+		var line = load(\"res://Environment/LoopCollider.tscn\").instance()
+		#line.set_filename(\"\")
+		#line.set_owner(get_tree().get_root())
+		line.transform.origin = -transform.origin
+		add_child(line)
+
+		var pos = transform.origin
+		var dir_a = ((2*PI)/s_c)*i
+		var dir_b = ((2*PI)/s_c)*(i+1)
+		
+		line.shape.a = pos + Vector2(r*cos(dir_a),r*sin(dir_a))
+		line.shape.b = pos + Vector2(r*cos(dir_b),r*sin(dir_b))
+		line.get_node(\"LineSprite\").transform.origin = pos + Vector2(r*cos(dir_a),r*sin(dir_a))
+		line.get_node(\"LineSprite\").rotation = tan(dir_a)
+		
+		segment_lines.append(line)
+
+func add_spike(pos, outside):
+	var place_pos = (segment_lines[pos].shape.a+segment_lines[pos].shape.b)/2
+	var spike = load(\"res://Environment/Spike.tscn\").instance()
+	#spike.transform.origin = -transform.origin
+	add_child(spike)
+	
+	spike.transform.origin = place_pos-transform.origin
+	spike.look_at(transform.origin)
+	spike.rotate(0.3)
+
+func _physics_process(delta):
+	turn(-SPIN_SPEED)
+	
+	pass
+
+func turn_items():
+	pass
+
+func turn(speed):
+	#position = spawn_point + (position - spawn_point).rotated(speed)
+	rotate(speed*SPIN_DIR)
+
+
+#RESET#
+func reset():
+	global_transform = spawn_transform
+"
+
+[node name="Loop" type="StaticBody2D" groups=[
+"loop",
+"resettable",
+]]
+collision_layer = 6
+collision_mask = 2
+script = SubResource( 1 )
+
+[node name="debugImage" type="Sprite" parent="."]
+texture = ExtResource( 1 )

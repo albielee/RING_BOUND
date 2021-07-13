@@ -1,0 +1,9 @@
+[gd_scene format=2]
+
+[node name="Spike" type="Area2D"]
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="."]
+position = Vector2( 0, 11.0002 )
+polygon = PoolVector2Array( -12.0336, 10.4289, 0.155807, -11.8688, 11.4533, 10.4289 )

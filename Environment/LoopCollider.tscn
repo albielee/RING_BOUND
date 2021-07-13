@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Loop/line.png" type="Texture" id=1]
+
+[sub_resource type="SegmentShape2D" id=1]
+resource_local_to_scene = true
+
+[node name="LoopCollider" type="CollisionShape2D"]
+shape = SubResource( 1 )
+
+[node name="LineSprite" type="Sprite" parent="."]
+position = Vector2( 0, 5 )
+rotation = 1.5708
+scale = Vector2( 0.04, 1 )
+texture = ExtResource( 1 )
