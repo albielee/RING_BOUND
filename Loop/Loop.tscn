@@ -19,6 +19,9 @@ func _ready():
 	create_circle(segment_count, radius)
 	
 	#$debugImage.scale = Vector2(1.2,1.2)
+	add_rotator(34,1)
+	
+	add_rotator(20,0)
 	#add_spike(34,1)
 	#add_spike(13,1)
 	#add_spike(45,1)
@@ -52,6 +55,16 @@ func create_circle(s_c,r):
 		line.get_node(\"LineSprite\").rotation = tan(dir_a)
 		
 		segment_lines.append(line)
+
+func add_rotator(pos, outside):
+	var place_pos = (segment_lines[pos].shape.a+segment_lines[pos].shape.b)/2
+	var rotator = load(\"res://Environment/Items/ItemRotate.tscn\").instance()
+
+	add_child(rotator)
+	
+	rotator.look_at(transform.origin)
+	rotator.transform.origin = place_pos-transform.origin + Vector2(-40*cos(rotator.rotation),-40*sin(rotator.rotation))*outside + Vector2(40*cos(rotator.rotation),40*sin(rotator.rotation))*(1-outside)
+	rotator.rotate(0.3)
 
 func add_spike(pos, outside):
 	var place_pos = (segment_lines[pos].shape.a+segment_lines[pos].shape.b)/2

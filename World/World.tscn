@@ -43,4 +43,4 @@ SPIN_DIR = -1
 shape = SubResource( 1 )
 
 [node name="ItemRotate" parent="." instance=ExtResource( 5 )]
-position = Vector2( 0, 100 )
+position = Vector2( 472, -3 )
